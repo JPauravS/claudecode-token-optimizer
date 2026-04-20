@@ -96,6 +96,24 @@ npm run setup --verbose
 
 Inspect `install.log` (repo root) for the failing phase.
 
+## Install fails at phase 6 — TypeScript compile error
+
+Symptoms: `install.log` tail shows errors like:
+```
+hooks/openwolf/src/hooks/shared.ts(16,47): error TS1005: ',' expected.
+hooks/openwolf/src/hooks/shared.ts(16,48): error TS1161: Unterminated regular expression literal.
+```
+
+Cause: pre-fix version of the patches introduced invalid TypeScript in
+`shared.ts` / `session-start.ts`. Fixed in commit `a34a654`.
+
+Fix — `git pull` and re-run:
+```bash
+cd ~/claudecode-token-optimizer && git pull
+npm run setup -- --yes --non-interactive
+npm run doctor
+```
+
 ## Partial / corrupt install
 
 If setup failed mid-run, the installer's `trap ERR` should have restored `~/.claude/settings.json` from the timestamped snapshot (`settings.json.pre-setup-<ts>.bak`). Verify:
