@@ -1,6 +1,6 @@
 # Roadmap
 
-Deferred features (Tier B in the release plan) ship only if post-launch issue volume justifies the maintenance cost. Each has an acceptable v1 workaround in place today.
+Deferred features ship only if post-launch issue volume justifies the maintenance cost. Each has an acceptable v1 workaround in place today.
 
 ## Deferred — gated on issue volume
 
