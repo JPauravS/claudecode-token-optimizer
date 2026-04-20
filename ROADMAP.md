@@ -6,8 +6,8 @@ Deferred features ship only if post-launch issue volume justifies the maintenanc
 
 | Feature | v1 workaround (shipped) | Promotion trigger |
 |---|---|---|
-| **Coexist mode with upstream caveman** — layer our hooks on top of a pre-existing upstream `JuliusBrussee/caveman` install instead of refusing | Installer detects upstream and refuses with uninstall instructions (A3 in release plan) | >3 GitHub issues requesting it |
-| **PM2 / launchd / systemd service install** — boot-time dashboard persistence | SessionStart-spawn hook (A1) auto-starts dashboard every Claude Code session; covers ~99% of real usage | >5 users asking for true boot persistence |
+| **Coexist mode with upstream caveman** — layer our hooks on top of a pre-existing upstream `JuliusBrussee/caveman` install instead of refusing | Installer detects upstream and refuses with uninstall instructions | >3 GitHub issues requesting it |
+| **PM2 / launchd / systemd service install** — boot-time dashboard persistence | SessionStart-spawn hook auto-starts dashboard every Claude Code session; covers ~99% of real usage | >5 users asking for true boot persistence |
 | **Dashboard health badge** — UI tile showing hook-install health, doctor results, auto-start status | `npm run doctor` CLI surfaces the same data | Post-launch feedback |
 | **Doctor-in-teardown** — run `npm run doctor` automatically after `teardown.sh` to verify clean state | Manual one-line instruction in teardown output | Stale-state bug reports |
 | **`share-bundle.sh` tarball exporter** — produce a portable install bundle for air-gapped / private-share scenarios | Public repo + `git clone` obsoletes the need | Corporate air-gap requests |
