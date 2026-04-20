@@ -6,6 +6,8 @@
 [![Node](https://img.shields.io/badge/node-%E2%89%A520-brightgreen.svg)](https://nodejs.org/)
 [![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20macOS%20%7C%20Linux-lightgrey.svg)](#prerequisites)
 
+![Dashboard demo](./docs/demo.gif)
+
 ---
 
 ## What this is
