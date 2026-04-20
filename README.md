@@ -107,9 +107,9 @@ Restores `~/.claude/settings.json` from `.bak`, removes `node_modules`, and prom
 
 ## Contributing + issues
 
-- Bugs, feature requests, install failures: https://github.com/JPauravS/claudecode-token-optimizer/issues — include `npm run doctor` output and the `dashboard/data/diagnostic-*.log` path if relevant.
-- PRs welcome. For changes inside vendored subtrees (`hooks/openwolf/` or `hooks/caveman-*.js` / `skills/caveman*`), add or extend a patch in `scripts/patches/` with a matching `*.patch.test.js` so the change survives the next `npm run fetch-*` sync.
-- For ideas outside the current scope, see `ROADMAP.md` — deferred features ship only when post-launch demand justifies the maintenance cost.
+- **Bugs / install failures:** https://github.com/JPauravS/claudecode-token-optimizer/issues — issue templates prompt for `npm run doctor` output + the `dashboard/data/diagnostic-*.log` path. Security issues: see `SECURITY.md`.
+- **PRs welcome.** Read `CONTRIBUTING.md` before starting non-trivial work. Short version: small focused PRs, conventional commit prefixes, vendored subtrees (`hooks/openwolf/`, `hooks/caveman-*`, `skills/caveman*`) must be modified via `scripts/patches/*.patch.js` so changes survive the next `npm run fetch-*` sync.
+- **Roadmap:** see `ROADMAP.md` for deferred features + promotion triggers.
 
 ---
 
