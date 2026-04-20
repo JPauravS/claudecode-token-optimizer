@@ -19,17 +19,7 @@ ${MARKER_AUTOINIT}
 
     // Only auto-init if we can resolve stack config (i.e., inside a configured workspace)
     const cfg = (function readCfg() {
-      // walk up from THIS hook's directory (always inside
-      // Combine GitRepo), not cwd. ESM runtime has no __dirname, so the
-      // old \`typeof __dirname\` ternary fell through to process.cwd() and
-      // broke auto-init for any project other than Combine GitRepo.
-      let dir;
-      try {
-        const u = decodeURIComponent(new URL(import.meta.url).pathname);
-        dir = path.dirname(u.replace(/^\\/([A-Za-z]):/, "$1:"));
-      } catch {
-        dir = (typeof __dirname !== "undefined") ? __dirname : process.cwd();
-      }
+      let dir = (typeof __dirname !== "undefined") ? __dirname : process.cwd();
       for (let i = 0; i < 12; i++) {
         const p = path.join(dir, "dashboard", "data", "openwolf-config.json");
         if (fs.existsSync(p)) {

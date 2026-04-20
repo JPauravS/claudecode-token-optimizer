@@ -14,17 +14,7 @@ const REPLACEMENT = `${MARKER}
 // Config resolver: reads dashboard/data/openwolf-config.json written by setup.sh.
 // Walks up from __dirname to locate the stack repo root (contains dashboard/data/).
 function readStackConfig(): { workspace_wolf_parent: string; project_default: string } {
-  // walk up from THIS module's directory (always inside
-  // Combine GitRepo), not cwd. ESM runtime has no __dirname, so the old
-  // ternary fell through to process.cwd() and returned a degenerate
-  // config (workspace = project = cwd) for any sibling project.
-  let dir: string;
-  try {
-    const u = decodeURIComponent(new URL(import.meta.url).pathname);
-    dir = path.dirname(u.replace(/^\/([A-Za-z]):/, "$1:"));
-  } catch {
-    dir = (typeof __dirname !== "undefined") ? __dirname : process.cwd();
-  }
+  let dir = (typeof __dirname !== "undefined") ? __dirname : process.cwd();
   for (let i = 0; i < 12; i++) {
     const cfg = path.join(dir, "dashboard", "data", "openwolf-config.json");
     if (fs.existsSync(cfg)) {

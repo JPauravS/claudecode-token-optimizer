@@ -36,6 +36,9 @@ jobs:
       - name: Fetch vendored OpenWolf sources (required for patch tests)
         run: node scripts/fetch-openwolf.js
 
+      - name: Compile OpenWolf TypeScript (catches patch-introduced TS errors)
+        run: npm run build:openwolf
+
       - name: Patch tests
         run: |
           for t in scripts/patches/*.test.js; do
