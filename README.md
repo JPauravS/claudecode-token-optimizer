@@ -27,6 +27,12 @@ Measurements above are from this project's own Claude Code sessions and are repr
 
 ## Install — paste into Claude Code
 
+<!--
+  DRIFT GUARDRAIL: the install prompt below is duplicated in
+  INSTALL_PROMPT.md. Keep both copies identical. If you change one,
+  update the other in the same PR.
+-->
+
 The fastest path: paste this into any Claude Code session and let Claude do the install.
 
 ```text

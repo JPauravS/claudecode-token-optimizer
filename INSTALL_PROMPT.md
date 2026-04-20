@@ -1,3 +1,11 @@
+<!--
+  DRIFT GUARDRAIL: the install prompt below is duplicated in README.md
+  (§ "Install — paste into Claude Code"). Keep both copies identical.
+  If you change one, update the other in the same PR. Both must have
+  the same URL, same dir alias (`D=~/claudecode-token-optimizer`), same
+  flag set (`--yes --non-interactive`), and same post-install instructions.
+-->
+
 # Install via Claude Code
 
 Paste this prompt into any Claude Code session:
