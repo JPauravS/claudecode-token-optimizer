@@ -1,0 +1,22 @@
+{
+  "repo": "JuliusBrussee/caveman",
+  "commit": "c2ed24b3e5d412cd0c25197b2bc9af587621fd99",
+  "license_spdx": "MIT",
+  "base_url_template": "https://raw.githubusercontent.com/JuliusBrussee/caveman/{commit}/",
+  "files": [
+    { "src": "hooks/caveman-activate.js", "dst": "hooks/caveman-activate.js" },
+    { "src": "hooks/caveman-mode-tracker.js", "dst": "hooks/caveman-mode-tracker.js" },
+    { "src": "hooks/caveman-config.js", "dst": "hooks/caveman-config.js" },
+    { "src": "hooks/caveman-statusline.sh", "dst": "hooks/caveman-statusline.sh" },
+    { "src": "skills/caveman/SKILL.md", "dst": "skills/caveman/SKILL.md" },
+    { "src": "skills/compress/SKILL.md", "dst": "skills/caveman-compress/SKILL.md" },
+    { "src": "skills/compress/scripts/__init__.py", "dst": "skills/caveman-compress/scripts/__init__.py" },
+    { "src": "skills/compress/scripts/__main__.py", "dst": "skills/caveman-compress/scripts/__main__.py" },
+    { "src": "skills/compress/scripts/cli.py", "dst": "skills/caveman-compress/scripts/cli.py" },
+    { "src": "skills/compress/scripts/compress.py", "dst": "skills/caveman-compress/scripts/compress.py" },
+    { "src": "skills/compress/scripts/detect.py", "dst": "skills/caveman-compress/scripts/detect.py" },
+    { "src": "skills/compress/scripts/validate.py", "dst": "skills/caveman-compress/scripts/validate.py" },
+    { "src": "skills/compress/scripts/benchmark.py", "dst": "skills/caveman-compress/scripts/benchmark.py" }
+  ],
+  "license_file": { "src": "LICENSE", "dst": "vendor/caveman-LICENSE" }
+}

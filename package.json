@@ -1,0 +1,39 @@
+{
+  "name": "claudecode-token-optimizer",
+  "version": "1.0.0",
+  "description": "Claude Code efficiency stack: caveman prose compression + OpenWolf repeated-read blocking + local dashboard",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "setup": "bash setup.sh",
+    "setup:yes": "bash setup.sh --yes --non-interactive",
+    "doctor": "node scripts/doctor.js",
+    "dashboard": "node dashboard/server.js",
+    "dashboard:stop": "node scripts/stop-dashboard.js",
+    "teardown": "bash teardown.sh",
+    "fetch-caveman": "node scripts/fetch-caveman.js",
+    "fetch-openwolf": "node scripts/fetch-openwolf.js",
+    "build:openwolf": "tsc -p tsconfig.openwolf.json",
+    "wolf:scan": "node hooks/openwolf/bin/openwolf.js scan",
+    "wolf:status": "node hooks/openwolf/bin/openwolf.js status",
+    "wolf:bug": "node hooks/openwolf/bin/openwolf.js bug",
+    "benchmark:compress": "node scripts/benchmark-compress.js",
+    "repair:ledger": "node scripts/repair-ledger.js",
+    "wolf:cron:tick": "node scripts/wolf-cron-tick.js",
+    "wolf:cron:run": "node scripts/wolf-cron-tick.js"
+  },
+  "dependencies": {
+    "express": "^5.0.0",
+    "chalk": "^5.3.0",
+    "chokidar": "^4.0.0",
+    "commander": "^12.0.0",
+    "node-cron": "^3.0.3",
+    "cron-parser": "^4.9.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.0",
+    "@types/node": "^22.0.0",
+    "@types/node-cron": "^3.0.11"
+  }
+}

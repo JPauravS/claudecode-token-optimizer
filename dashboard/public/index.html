@@ -1,0 +1,270 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Claude Stack — Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+  <header>
+    <h1>claudecode-token-optimizer <span class="phase">v1</span></h1>
+    <div class="health">
+      <label for="project-switcher" class="muted" style="margin-right:6px">project</label>
+      <select id="project-switcher" style="margin-right:12px;background:var(--bg);color:var(--text);border:1px solid var(--border);padding:4px 8px;border-radius:4px"></select>
+      <span id="health-dot" class="dot"></span>
+      <span id="health-text">checking…</span>
+    </div>
+  </header>
+
+  <section class="hero" id="hero">
+    <div class="hero-tile" data-tab="overview" id="tile-total">
+      <div class="hero-label">Total Tokens Used <span class="src-badge ok" title="measured">✓</span></div>
+      <div class="hero-value" id="kpi-total">0</div>
+      <div class="hero-sub" id="kpi-total-sub">input 0 · output 0 · across 0 sessions</div>
+    </div>
+    <div class="hero-tile clickable" data-tab="input" id="tile-input">
+      <div class="hero-label">Input Tokens Saved <span class="src-badge mixed" title="real + estimated">~</span></div>
+      <div class="hero-value" id="kpi-input">0 <span class="hero-pct" id="kpi-input-pct">(0%)</span></div>
+      <div class="hero-sub" id="kpi-input-sub">compress 0 · repeated-read 0</div>
+    </div>
+    <div class="hero-tile clickable" data-tab="output" id="tile-output">
+      <div class="hero-label">Output Tokens Saved <span class="src-badge" id="kpi-output-badge"></span></div>
+      <div class="hero-value" id="kpi-output">— <span class="hero-pct" id="kpi-output-pct"></span></div>
+      <div class="hero-sub" id="kpi-output-sub">needs baseline — run one <code>/caveman off</code> session</div>
+    </div>
+  </section>
+
+  <nav class="tabs" id="tabs">
+    <button class="tab active" data-tab="overview">Overview</button>
+    <button class="tab" data-tab="input">Input</button>
+    <button class="tab" data-tab="output">Output</button>
+    <button class="tab" data-tab="activity">Activity</button>
+    <button class="tab" data-tab="config">Config</button>
+  </nav>
+
+  <main>
+    <!-- OVERVIEW -->
+    <section class="tab-panel active" data-panel="overview">
+      <div class="card">
+        <div class="card-head"><h2>Axis snapshot</h2></div>
+        <div class="teaser-list">
+          <a class="teaser" data-tab="input" href="#input">
+            <div class="teaser-label">Input</div>
+            <div class="teaser-body" id="teaser-input">—</div>
+          </a>
+          <a class="teaser" data-tab="output" href="#output">
+            <div class="teaser-label">Output</div>
+            <div class="teaser-body" id="teaser-output">—</div>
+          </a>
+          <a class="teaser" data-tab="activity" href="#activity">
+            <div class="teaser-label">Activity</div>
+            <div class="teaser-body" id="teaser-activity">—</div>
+          </a>
+          <a class="teaser" data-tab="config" href="#config">
+            <div class="teaser-label">Config</div>
+            <div class="teaser-body" id="teaser-config">—</div>
+          </a>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-head"><h2>Legend</h2></div>
+        <div class="legend">
+          <span><span class="src-badge ok">✓</span> measured — real counter from session transcripts or benchmarks</span>
+          <span><span class="src-badge mixed">~</span> estimated — derived from lifetime aggregates, formula in tooltip</span>
+          <span><span class="src-badge pending">?</span> needs baseline — metric requires more data to compute</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- INPUT -->
+    <section class="tab-panel" data-panel="input">
+      <div class="card">
+        <div class="card-head">
+          <h2>Memory-file compression <span class="src-badge ok">✓</span></h2>
+          <span class="badge mode-coming" id="compress-badge">0 runs</span>
+        </div>
+        <div class="metric-row small">
+          <div class="metric">
+            <div class="metric-label">Files benchmarked</div>
+            <div class="metric-value" id="compress-runs">0</div>
+          </div>
+          <div class="metric">
+            <div class="metric-label">Avg savings</div>
+            <div class="metric-value" id="compress-avg">0%</div>
+          </div>
+          <div class="metric">
+            <div class="metric-label">Tokens saved</div>
+            <div class="metric-value" id="compress-saved">0</div>
+          </div>
+        </div>
+        <table id="compress-table">
+          <thead>
+            <tr><th>File</th><th>Original</th><th>Compressed</th><th>Saved</th></tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+        <div class="card-footer muted">Run <code>npm run benchmark:compress -- &lt;original.md&gt; &lt;compressed.md&gt;</code> to populate.</div>
+      </div>
+
+      <div class="card">
+        <div class="card-head">
+          <h2>OpenWolf pre-read + repeated-read blocks <span class="src-badge mixed">~</span></h2>
+          <span class="badge" id="anatomy-badge">—</span>
+        </div>
+        <div id="anatomy-unconfigured" hidden>
+          <p class="placeholder-text">OpenWolf not configured. Run <code>bash setup.sh</code>.</p>
+        </div>
+        <div id="anatomy-configured" hidden>
+          <div class="metric-row small">
+            <div class="metric">
+              <div class="metric-label">Anatomy hit rate</div>
+              <div class="metric-value" id="an-hit-rate">—</div>
+              <div class="metric-note" id="an-hit-note">— hits / — misses</div>
+            </div>
+            <div class="metric">
+              <div class="metric-label">Repeated reads blocked</div>
+              <div class="metric-value" id="an-rep">0</div>
+              <div class="metric-note">duplicate reads prevented (lifetime)</div>
+            </div>
+            <div class="metric">
+              <div class="metric-label">Est tokens saved</div>
+              <div class="metric-value" id="an-saved">0</div>
+              <div class="metric-note" id="an-saved-note">~ repeated_blocks × avg file tokens</div>
+            </div>
+          </div>
+          <div class="breakdown-label">Current session</div>
+          <div class="stat-row"><span>Anatomy hits:</span> <span id="an-cur-hits">0</span></div>
+          <div class="stat-row"><span>Anatomy misses:</span> <span id="an-cur-misses">0</span></div>
+          <div class="stat-row"><span>Repeated reads warned:</span> <span id="an-cur-rep">0</span></div>
+          <div class="card-footer muted">Anatomy hits = description pre-injected (assist count). Direct token savings credited only from repeated-read blocks.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- OUTPUT -->
+    <section class="tab-panel" data-panel="output">
+      <div class="card">
+        <div class="card-head">
+          <h2>Caveman — real session measurements <span class="src-badge ok">✓</span></h2>
+          <span id="caveman-mode" class="badge mode-unknown">—</span>
+        </div>
+        <div class="metric-row">
+          <div class="metric">
+            <div class="metric-label">Total sessions</div>
+            <div class="metric-value" id="total-sessions">0</div>
+          </div>
+          <div class="metric">
+            <div class="metric-label">Output tokens (all time)</div>
+            <div class="metric-value" id="total-output-tokens">0</div>
+            <div class="metric-note" id="total-turns-note">0 assistant turns</div>
+          </div>
+          <div class="metric big">
+            <div class="metric-label">Observed delta vs <code>off</code></div>
+            <div class="metric-value" id="delta-value">—</div>
+            <div class="metric-note" id="delta-note">Need real sessions with caveman <code>off</code> and a compared mode to compute delta.</div>
+          </div>
+        </div>
+
+        <div class="breakdown">
+          <div class="breakdown-label">Mode breakdown (all sessions)</div>
+          <div id="mode-breakdown" class="breakdown-bar"></div>
+        </div>
+
+        <div class="per-mode">
+          <div class="breakdown-label">Output tokens per turn, by mode</div>
+          <table id="per-mode-table">
+            <thead>
+              <tr><th>Mode</th><th>Sessions</th><th>Turns</th><th>Prose/turn<sup title="caveman's jurisdiction — prose tokens only, pooled turn-weighted">★</sup></th><th>Tool-use/turn<sup title="code in Edit/Write/Bash — caveman preserves verbatim">∎</sup></th><th>Total/turn<sup title="pooled mean, all output incl. tool_use">†</sup></th><th>MoM<sup title="legacy median-of-medians, unweighted, artifact-prone">‡</sup></th></tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+          <div class="card-footer muted" id="per-mode-footer">
+            <strong>Prose/turn</strong> is caveman's honest scorecard — splits <code>output_tokens_total</code> by prose/tool_use char ratio per transcript. Tool-use column shows what caveman <em>can't</em> touch (code in Edit/Write/Bash). Total and MoM kept for comparison.
+          </div>
+        </div>
+
+        <div class="last-session">
+          Last session: <span id="last-session">—</span> ·
+          <span class="muted">Measurement: transcript parse (real Claude output_tokens, no synthetic baselines)</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ACTIVITY -->
+    <section class="tab-panel" data-panel="activity">
+      <div class="card">
+        <div class="card-head">
+          <h2>Cron engine</h2>
+          <span class="badge" id="activity-cron-badge">—</span>
+        </div>
+        <div class="stat-row"><span>Status:</span> <span id="act-cron-status">—</span></div>
+        <div class="stat-row"><span>Last heartbeat:</span> <span id="act-cron-heartbeat">—</span></div>
+        <div class="stat-row"><span>Dead letter queue:</span> <span id="act-cron-dead">0</span></div>
+      </div>
+
+      <div class="card">
+        <div class="card-head"><h2>Recent events (merged timeline)</h2></div>
+        <table class="recent-table">
+          <thead><tr><th>When</th><th>Kind</th><th>Summary</th></tr></thead>
+          <tbody id="activity-body"><tr><td colspan="3" class="muted">none</td></tr></tbody>
+        </table>
+      </div>
+
+      <div class="card">
+        <div class="card-head"><h2>Recent bugs (project-scoped)</h2></div>
+        <table class="recent-table">
+          <thead><tr><th>ID</th><th>File</th><th>Message</th><th>Seen</th></tr></thead>
+          <tbody id="act-bug-body"><tr><td colspan="4" class="muted">none</td></tr></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- CONFIG -->
+    <section class="tab-panel" data-panel="config">
+      <div class="card">
+        <div class="card-head"><h2>OpenWolf paths</h2></div>
+        <div id="cfg-paths"><p class="placeholder-text muted">—</p></div>
+      </div>
+
+      <div class="card">
+        <div class="card-head"><h2>Discovered projects · cron opt-in</h2></div>
+        <table class="recent-table">
+          <thead><tr><th>Label</th><th>Path</th><th>Last touch</th><th>Source</th><th>Cron</th></tr></thead>
+          <tbody id="cfg-projects-body"><tr><td colspan="5" class="muted">—</td></tr></tbody>
+        </table>
+        <div class="card-footer muted">Auto-discovered = folder has <code>.wolf/token-ledger.json</code>. Registered = entry in <code>projects[]</code> overlay. Toggling cron writes the overlay entry; restart dashboard to apply.</div>
+      </div>
+
+      <div class="card">
+        <div class="card-head"><h2>Cron manifest (active project, read-only)</h2></div>
+        <table class="recent-table">
+          <thead><tr><th>Task</th><th>Schedule</th><th>Enabled</th><th>Description</th></tr></thead>
+          <tbody id="cfg-cron-body"><tr><td colspan="4" class="muted">—</td></tr></tbody>
+        </table>
+      </div>
+
+      <div class="card">
+        <div class="card-head"><h2>Settings.json hooks</h2></div>
+        <table class="recent-table">
+          <thead><tr><th>Event</th><th>Matcher</th><th>Command</th></tr></thead>
+          <tbody id="cfg-hook-body"><tr><td colspan="3" class="muted">—</td></tr></tbody>
+        </table>
+      </div>
+
+      <div class="card">
+        <div class="card-head"><h2>LOCAL MOD patches</h2></div>
+        <div id="cfg-patches" class="muted">—</div>
+        <div class="card-footer muted">Re-applied on every <code>scripts/fetch-openwolf.js</code> run.</div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <span id="footer-text">polling /api/stats every 10s • 127.0.0.1:3847</span>
+  </footer>
+
+  <script src="/app.js"></script>
+</body>
+</html>

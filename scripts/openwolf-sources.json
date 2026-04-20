@@ -1,0 +1,50 @@
+{
+  "repo": "cytostack/openwolf",
+  "commit": "bd69835121b75da8cbfdcc49c763c5fc00b0c884",
+  "license_spdx": "AGPL-3.0-or-later",
+  "base_url_template": "https://raw.githubusercontent.com/cytostack/openwolf/{commit}/",
+  "files": [
+    { "src": "src/hooks/session-start.ts", "dst": "hooks/openwolf/src/hooks/session-start.ts" },
+    { "src": "src/hooks/pre-read.ts",      "dst": "hooks/openwolf/src/hooks/pre-read.ts" },
+    { "src": "src/hooks/post-read.ts",     "dst": "hooks/openwolf/src/hooks/post-read.ts" },
+    { "src": "src/hooks/pre-write.ts",     "dst": "hooks/openwolf/src/hooks/pre-write.ts" },
+    { "src": "src/hooks/post-write.ts",    "dst": "hooks/openwolf/src/hooks/post-write.ts" },
+    { "src": "src/hooks/stop.ts",          "dst": "hooks/openwolf/src/hooks/stop.ts" },
+    { "src": "src/hooks/shared.ts",        "dst": "hooks/openwolf/src/hooks/shared.ts" },
+
+    { "src": "src/scanner/anatomy-scanner.ts",        "dst": "hooks/openwolf/src/scanner/anatomy-scanner.ts" },
+    { "src": "src/scanner/description-extractor.ts",  "dst": "hooks/openwolf/src/scanner/description-extractor.ts" },
+    { "src": "src/scanner/project-root.ts",           "dst": "hooks/openwolf/src/scanner/project-root.ts" },
+
+    { "src": "src/tracker/token-estimator.ts", "dst": "hooks/openwolf/src/tracker/token-estimator.ts" },
+    { "src": "src/tracker/token-ledger.ts",    "dst": "hooks/openwolf/src/tracker/token-ledger.ts" },
+    { "src": "src/tracker/waste-detector.ts",  "dst": "hooks/openwolf/src/tracker/waste-detector.ts" },
+
+    { "src": "src/buglog/bug-matcher.ts", "dst": "hooks/openwolf/src/buglog/bug-matcher.ts" },
+    { "src": "src/buglog/bug-tracker.ts", "dst": "hooks/openwolf/src/buglog/bug-tracker.ts" },
+
+    { "src": "src/cli/index.ts",    "dst": "hooks/openwolf/src/cli/index.ts" },
+    { "src": "src/cli/init.ts",     "dst": "hooks/openwolf/src/cli/init.ts" },
+    { "src": "src/cli/scan.ts",     "dst": "hooks/openwolf/src/cli/scan.ts" },
+    { "src": "src/cli/status.ts",   "dst": "hooks/openwolf/src/cli/status.ts" },
+    { "src": "src/cli/bug-cmd.ts",  "dst": "hooks/openwolf/src/cli/bug-cmd.ts" },
+    { "src": "src/cli/registry.ts", "dst": "hooks/openwolf/src/cli/registry.ts" },
+    { "src": "src/cli/update.ts",   "dst": "hooks/openwolf/src/cli/update.ts" },
+    { "src": "src/cli/daemon-cmd.ts", "dst": "hooks/openwolf/src/cli/daemon-cmd.ts" },
+    { "src": "src/cli/cron-cmd.ts",   "dst": "hooks/openwolf/src/cli/cron-cmd.ts" },
+
+    { "src": "src/daemon/cron-engine.ts", "dst": "hooks/openwolf/src/daemon/cron-engine.ts" },
+    { "src": "src/daemon/health.ts",      "dst": "hooks/openwolf/src/daemon/health.ts" },
+
+    { "src": "src/utils/fs-safe.ts",  "dst": "hooks/openwolf/src/utils/fs-safe.ts" },
+    { "src": "src/utils/logger.ts",   "dst": "hooks/openwolf/src/utils/logger.ts" },
+    { "src": "src/utils/paths.ts",    "dst": "hooks/openwolf/src/utils/paths.ts" },
+    { "src": "src/utils/platform.ts", "dst": "hooks/openwolf/src/utils/platform.ts" },
+
+    { "src": "src/templates/OPENWOLF.md",  "dst": "hooks/openwolf/src/templates/OPENWOLF.md" },
+    { "src": "src/templates/config.json",  "dst": "hooks/openwolf/src/templates/config.json" },
+
+    { "src": "bin/openwolf.ts", "dst": "hooks/openwolf/bin/openwolf.ts" }
+  ],
+  "license_file": { "src": "LICENSE", "dst": "vendor/openwolf-LICENSE" }
+}

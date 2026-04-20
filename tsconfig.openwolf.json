@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "Node16",
+    "moduleResolution": "Node16",
+    "strict": true,
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true,
+    "outDir": "hooks/openwolf",
+    "rootDir": "hooks/openwolf",
+    "declaration": false,
+    "sourceMap": false
+  },
+  "include": [
+    "hooks/openwolf/src/**/*.ts",
+    "hooks/openwolf/bin/**/*.ts"
+  ],
+  "exclude": []
+}
