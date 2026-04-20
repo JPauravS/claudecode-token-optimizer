@@ -1,0 +1,45 @@
+name: tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install deps
+        run: npm install
+
+      - name: Syntax check all .js
+        run: |
+          find . -type f -name '*.js' \
+            -not -path './node_modules/*' \
+            -not -path './vendor/*' \
+            -exec node -c {} \;
+
+      - name: Standalone unit tests
+        run: |
+          node hooks/caveman-session-stop.test.js
+          node scripts/openwolf-prompt.test.js
+          node scripts/repair-ledger.test.js
+
+      - name: Fetch vendored OpenWolf sources (required for patch tests)
+        run: node scripts/fetch-openwolf.js
+
+      - name: Patch tests
+        run: |
+          for t in scripts/patches/*.test.js; do
+            echo "::group::$t"
+            node "$t"
+            echo "::endgroup::"
+          done
