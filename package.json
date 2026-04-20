@@ -2,6 +2,13 @@
   "name": "claudecode-token-optimizer",
   "version": "1.0.0",
   "description": "Claude Code efficiency stack: caveman prose compression + OpenWolf repeated-read blocking + local dashboard",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JPauravS/claudecode-token-optimizer.git"
+  },
+  "bugs": {
+    "url": "https://github.com/JPauravS/claudecode-token-optimizer/issues"
+  },
   "engines": {
     "node": ">=20"
   },

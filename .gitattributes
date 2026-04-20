@@ -1,0 +1,9 @@
+*.sh   text eol=lf
+*.js   text
+*.ts   text
+*.json text
+*.md   text
+*.html text
+*.css  text
+*.py   text eol=lf
+*.yml  text eol=lf
