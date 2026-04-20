@@ -167,22 +167,13 @@ Full upstream LICENSE is reproduced in \`${sources.license_file.dst}\` and below
 ${licenseText}
 `;
 
-  // Preserve openwolf section if present (mirror of
-  // fetch-openwolf.js:91-97,149 read-split-append pattern).
-  const attrPath = path.join(REPO_ROOT, 'LICENSE-ATTRIBUTION.md');
-  const OPENWOLF_MARKER = '## cytostack/openwolf';
-  let openwolfTail = '';
-  if (fs.existsSync(attrPath)) {
-    const existing = fs.readFileSync(attrPath, 'utf8');
-    const idx = existing.indexOf(OPENWOLF_MARKER);
-    if (idx !== -1) openwolfTail = '\n' + existing.slice(idx);
-  }
-  fs.writeFileSync(
-    attrPath,
-    header + cavemanSection.trimEnd() + '\n' + openwolfTail,
-    'utf8',
-  );
-  log(`  LICENSE-ATTRIBUTION.md${openwolfTail ? ' (preserved openwolf section)' : ''}`);
+  // LICENSE-ATTRIBUTION.md is checked into the repo with hand-curated
+  // attribution content (condensed + reorganized). Do not regenerate it here —
+  // users who bump the pinned commit update the attribution file manually.
+  // The `header` and `cavemanSection` templates above are kept for reference
+  // / downstream forks that want an auto-generated file.
+  void header;
+  void cavemanSection;
 
   log('Done.');
 }

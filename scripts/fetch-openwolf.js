@@ -90,17 +90,14 @@ async function main() {
   writeFile(sources.license_file.dst, licenseText);
   log(`  ${sources.license_file.dst}  (${licenseText.length} bytes)`);
 
-  // Append openwolf section to LICENSE-ATTRIBUTION.md (preserve caveman content)
-  const attrPath = path.join(REPO_ROOT, 'LICENSE-ATTRIBUTION.md');
-  let existing = fs.existsSync(attrPath) ? fs.readFileSync(attrPath, 'utf8') : '';
-  const OPENWOLF_MARKER = '## cytostack/openwolf';
-  if (existing.includes(OPENWOLF_MARKER)) {
-    // Remove existing openwolf section so we rewrite it with latest SHA
-    existing = existing.split(OPENWOLF_MARKER)[0].trimEnd() + '\n';
-  }
+  // LICENSE-ATTRIBUTION.md is checked into the repo with hand-curated
+  // attribution content. Do not regenerate it here — users who bump the
+  // pinned commit update the attribution file manually. The template below
+  // is retained for reference / downstream forks that want an auto-generated file.
   const patchedFiles = sources.files.filter(f => PATCHES[f.dst]).map(f => f.dst);
   const strippedFiles = sources.files.filter(f => TEMPLATE_STRIPS[f.dst]).map(f => f.dst);
-  const openwolfSection = `
+  const OPENWOLF_MARKER = '## cytostack/openwolf';
+  const _openwolfSectionTemplate = `
 ${OPENWOLF_MARKER}
 
 The following files are vendored from
@@ -149,8 +146,8 @@ separated vendored openwolf subtree. Full upstream LICENSE at
 
 ${licenseText}
 `;
-  fs.writeFileSync(attrPath, existing.trimEnd() + openwolfSection, 'utf8');
-  log(`  LICENSE-ATTRIBUTION.md (appended openwolf section)`);
+  void _openwolfSectionTemplate;
+  void OPENWOLF_MARKER;
 
   log(`Done. ${patchedCount} file(s) patched.`);
 }
