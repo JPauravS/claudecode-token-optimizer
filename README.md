@@ -1,6 +1,6 @@
 # claudecode-token-optimizer
 
-**54% fewer input tokens. Shorter responses. Do more work in the same context window.**
+**50%+ fewer input tokens. 20%+ shorter output. Do more work in the same context window.**
 
 Claude Code sessions get smaller inputs, shorter outputs, and a local dashboard to measure both — without changing how you work. Both axes. Measured.
 
@@ -35,8 +35,8 @@ Same fix. Fraction of the tokens. Context window stays clear for the next task.
 ## What it saves
 
 ```
-INPUT TOKENS SAVED    ██████████  54%   repeated-read blocking + file compression
-SHORTER RESPONSES     ████████    35%   prose-axis · code/commits/PRs unchanged
+INPUT TOKENS SAVED    ██████████  50%+  repeated-read blocking + file compression
+OUTPUT TOKENS SAVED   ████████    20%+  prose-axis · code/commits/PRs unchanged
 CONTEXT WINDOW        ██████████  ↑     longer tasks · more files · fewer compactions
 TECHNICAL ACCURACY    ██████████ 100%
 ```
@@ -76,8 +76,8 @@ Auto-checked by the installer. If any are missing, `npm run setup` exits with an
 
 | Component | What it does | Measured effect |
 |---|---|---|
-| **`caveman`** | Injects output-compression rules per session. Strips articles, filler, pleasantries, hedging. Code, errors, commits, PRs unchanged. | ~22% shorter prose responses (~35% prose-axis isolated — n=8 full + 9 off sessions) |
-| **`OpenWolf`** | Blocks repeated reads of the same file per session. Cached anatomy descriptions inject instead. Per-project memory + buglog. | ~54% fewer input tokens (n=17 sessions) |
+| **`caveman`** | Injects output-compression rules per session. Strips articles, filler, pleasantries, hedging. Code, errors, commits, PRs unchanged. | 20%+ shorter output (~35% prose-axis isolated — n=8 full + 9 off sessions) |
+| **`OpenWolf`** | Blocks repeated reads of the same file per session. Cached anatomy descriptions inject instead. Per-project memory + buglog. | 50%+ fewer input tokens (n=17 sessions) |
 | **`caveman-compress`** | On-demand skill that compresses markdown memory files in place. | 30–50% file-size reduction on CLAUDE.md / memory.md |
 | **Dashboard** | Local Express server on `http://127.0.0.1:3847`. Hero KPI strip + 5-tab drilldown, per-project switcher, cron host. | Observability — measures both axes |
 
