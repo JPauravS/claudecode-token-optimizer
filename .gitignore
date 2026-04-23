@@ -18,3 +18,8 @@ hooks/openwolf/bin/**/*.ts
 
 # daemon-cmd/cron-cmd now vendored; dashboard+designqc commands
 # dropped entirely via cli/index.ts patch, so no stubs needed.
+.gstack/
+
+# Internal session context + strategy — not for public repo
+SESSION_CONTEXT*.md
+DISTRIBUTION_PLAN.md

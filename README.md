@@ -55,11 +55,41 @@ The context window benefit compounds: smaller inputs mean more turns before cont
   update the other in the same PR.
 -->
 
-Claude runs the whole install inside its session — clone, setup, verify, report back. Paste this once:
+Claude reviews the repo, runs the install interactively, and reports back. Paste this once:
 
 ```text
-Install claudecode-token-optimizer: set D=~/claudecode-token-optimizer; if [ -d "$D/.git" ] run `cd "$D" && git pull`, elif [ -d "$D" ] run `mv "$D" "${D}.backup.$(date +%s)" && git clone --depth 1 https://github.com/JPauravS/claudecode-token-optimizer.git "$D" && cd "$D"`, else run `git clone --depth 1 https://github.com/JPauravS/claudecode-token-optimizer.git "$D" && cd "$D"`; then `npm run setup -- --yes --non-interactive` and `npm run doctor` (last stdout line has a `DOCTOR_RESULT:` sentinel — `{"pass":true}` = green; or pipe `--json` for pure JSON). If green, ask me if I want the dashboard to auto-start on every Claude Code session — if yes, run `node scripts/merge-settings.js --enable-autostart`. To view savings, run `npm run dashboard` in a new terminal and open http://127.0.0.1:3847. If install fails, run `npm run doctor`, copy its output plus the `dashboard/data/diagnostic-*.log` path, and open a GitHub issue at https://github.com/JPauravS/claudecode-token-optimizer/issues.
+I want to try `claudecode-token-optimizer` — an open-source Claude Code add-on (MIT + vendored AGPL-3.0, no telemetry, dashboard binds 127.0.0.1 only). Repo: https://github.com/JPauravS/claudecode-token-optimizer
+
+Please install it for me with these steps:
+
+1. Clone the repo to `~/claudecode-token-optimizer`, pinned to release tag `v1.1.5` (`git clone --depth 1 --branch v1.1.5 https://github.com/JPauravS/claudecode-token-optimizer.git`). If the directory already exists and is a git checkout, `git fetch --tags && git checkout v1.1.5`; if it exists but is not a git checkout, rename it to `${dir}.backup.<timestamp>` and clone fresh at the tag.
+2. Open `README.md` and `SECURITY.md` from the clone and skim them so you understand what the install does. The relevant scripts are `scripts/install.js`, `scripts/merge-settings.js`, and `teardown.sh` — glance at those too. Also open `package.json` and check the `scripts` block for any `preinstall`, `install`, `postinstall`, or `prepare` hooks; those run automatically during `npm install` and are the single highest-leverage attack surface in any Node project — if any are present and look unfamiliar, stop and tell me what they do. If anything else looks off, stop and tell me before continuing.
+3. Run `npm run setup` (interactive — answer prompts using detected defaults unless I tell you otherwise). Then run `npm run doctor` and read the `DOCTOR_RESULT:` JSON sentinel on the last stdout line to confirm `{"pass":true}`.
+4. Tell me the doctor result. Do **not** enable any auto-start, persistence, or settings-file modifications beyond what `npm run setup` does by default. If I want the dashboard to launch on every Claude Code session, I will ask you to run `node scripts/merge-settings.js --enable-autostart` as a separate explicit step.
+5. To view savings I'll run `npm run dashboard` myself and open http://127.0.0.1:3847.
+
+If `npm run setup` exits with `ERR_PREREQ:`, fix the missing prerequisite (Node ≥ 20, git, bash) and retry. If anything else fails, run `npm run doctor`, paste its output here, and stop.
 ```
+
+<details>
+<summary><b>What does the install actually change on my system?</b> (click to expand)</summary>
+
+| Path | Written | Reversible? |
+|---|---|---|
+| `~/claudecode-token-optimizer/` | Cloned repo + `node_modules/` | Yes — `bash teardown.sh` then `rm -rf` the dir |
+| `~/.claude/settings.json` | New `hooks` entries bracketed by `# BEGIN claudecode-token-optimizer` / `# END` markers; original saved to `.bak` | Yes — teardown restores from `.bak` |
+| `~/.claude/skills/` | `caveman/` + `caveman-compress/` | Yes — teardown removes both |
+| `~/.claude/commands/` | `/caveman` + `/openwolf` slash commands | Yes — teardown removes both |
+| `<workspace>/.wolf/` + `<project>/.wolf/` | Per-project state (memory, ledger, anatomy) | Yes — teardown prompts before delete |
+| `~/claudecode-token-optimizer/dashboard/data/` | Local runtime state (sessions, snapshots). Gitignored | Yes — deleted with the install dir |
+
+**No** systemd/launchd, **no** scheduled tasks, **no** browser extensions, **no** outbound network beyond `git clone` + `npm install`, **no** telemetry. Dashboard binds `127.0.0.1` only and only runs when you start it manually with `npm run dashboard`. Autostart is opt-in via a separate explicit command.
+
+Full audit + verification commands: [`TRUST.md`](./TRUST.md).
+
+</details>
+
+> **Did Claude Code refuse the install with a "this looks like a supply-chain attack" warning?** That warning is correct behavior — and the rewrite above removes every signal that triggered it (auto-confirm flags, bundled persistence step, scripted-shell shape). See **[`TRUST.md`](./TRUST.md)** for the full breakdown + how to audit the source yourself before installing.
 
 ### Prerequisites
 
